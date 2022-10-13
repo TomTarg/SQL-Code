@@ -1,1 +1,6 @@
-Create tbales
+Select filegroup, create recovery bulk, create Database   
+Create tables for two main files, import the data into the tables
+Create no null constraint columns
+Build tables, add primary and foreign keys, create Diagram (alos in PDF format)
+Create index, views, procedures, formulas 
+Demonstrate the data with simple variables
