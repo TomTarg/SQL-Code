@@ -1,6 +1,0 @@
-Select filegroup, create recovery bulk, create Database.   
-Create table of raw data (67 columns , 363K rows) & import the data into the table.
-Check for nu null columns and create constraints. 
-Build tables, add primary and foreign keys, create Diagram (alos in PDF format)
-Create index, views, procedures, formulas 
-Demonstrate the data with simple variables.
