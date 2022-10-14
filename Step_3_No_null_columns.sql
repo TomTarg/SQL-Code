@@ -1,51 +1,46 @@
 ---  ===========================================================
---- 3 Check for not null columns with Dynamic SQL and add 'not null' constraints for informative columns  
+--- 3 Add constraint not null for 68 columns using the procedure, dynamic SQL, while loop and try & catch.    
 ---  ===========================================================
 use World_population
 GO
 
-CREATE or ALTER PROC nonull (@table NVARCHAR(128),@col NVARCHAR(128))
+CREATE OR ALTER PROC [dbo].[nonull_check]
 AS
 BEGIN
-    DECLARE @sql NVARCHAR(MAX);
 
-    SET @sql = N'SELECT sum(iif ('+ @col + N'  is null,1,0)) FROM ' + @table;
-	set @sql = @sql + ' alter table ' + @table + ' alter column ' + @col + ' int not NULL';
+DECLARE @COUNT INT, @MAXCOUNT INT,@COLNAME nvarchar(100), @sql nvarchar(1000), @dtype nvarchar(100),@tabnam nvarchar(100)
 
-	EXEC sp_executesql @sql;
-END;
-GO
-
-  SET NOEXEC ON
-exec nonull 'World','LocID'
-GO
-exec nonull 'World','SortOrder'
-GO
-exec nonull 'World','LocTypeID'
-GO
-exec nonull 'World','VarID'
-GO
-exec nonull 'worldothervariants','LocID'
-GO
-exec nonull 'worldothervariants','SortOrder'
-GO
-exec nonull 'worldothervariants','LocTypeID'
-GO
-exec nonull 'worldothervariants','VarID'
-GO
-  SET NOEXEC OFF;
-
---- check what columns became not nullable
-
-select TABLE_NAME ,COLUMN_NAME,DATA_TYPE, IS_NULLABLE
+CREATE TABLE #ColumnList (ID INT IDENTITY (1,1),TABLE_NAME nvarchar(50),COLUMN_NAME nvarchar(50),DATA_TYPE nvarchar(50))
+INSERT INTO #ColumnList
+select TABLE_NAME ,COLUMN_NAME,DATA_TYPE
 from INFORMATION_SCHEMA.COLUMNS
-where TABLE_NAME in ('World','worldothervariants')
-and COLUMN_NAME in ('SortOrder','LocID','LocTypeID','VarID')
+where TABLE_NAME = 'World'
+ 
+SELECT @COUNT = 1
+SELECT @MAXCOUNT = MAX(ID) FROM #ColumnList
 
----check for comparison between columns of the 2 tables
+WHILE (@COUNT<@MAXCOUNT)
+	BEGIN
 
-select sum(iif(nullif(w.SortOrder,wo.SortOrder)is null,0,1)) as SortOrder_Check,
-       sum(iif(nullif(w.locid,wo.locid)is null,0,1)) as Lock_Check,
-	   sum(iif(nullif(w.LocTypeID,wo.LocTypeID)is null,0,1)) as LocTypeID_Check,
-	   sum(iif(nullif(w.VarID,wo.VarID)is null,0,1)) as VarID_Check
-from World W join worldOtherVariants wo on w.SortOrder=wo.SortOrder
+	    SELECT @tabnam = TABLE_NAME FROM #ColumnList WHERE ID = @COUNT 
+		SELECT @COLNAME = COLUMN_NAME FROM #ColumnList WHERE ID = @COUNT
+		SELECT @dtype = DATA_TYPE FROM #ColumnList WHERE ID = @COUNT
+ 
+		SET @sql = N'ALTER TABLE ' + @tabnam + ' ALTER COLUMN ' + @COLNAME + ' ' +@dtype + ' NOT NULL;'
+
+		begin try
+		exec sp_executesql @sql
+		print '-- ' + @COLNAME + ' - column NOT NULL constraint has been added!'
+		end try
+		begin catch
+		end catch
+
+		SET @COUNT = @COUNT + 1
+	END
+drop table #ColumnList
+END
+GO
+
+exec nonull_check
+GO
+
