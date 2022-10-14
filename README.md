@@ -1,16 +1,3 @@
-# Data_analysis
-
-Select filegroup, create recovery bulk, create Database   
-Create table and upload data. 3 options (67 columns , 363K rows)
-Add constraint not null for 68 (67+IDENTITY column) columns using the procedure, dynamic SQL, while loop and try & catch. 
-
-Build tables, add primary and foreign keys, create Diagram (alos in PDF format)
-Create index, views, procedures, formulas 
-Demonstrate the data with simple variables.
-
-TomTarg/README.md
-👋 Hi, I’m @TomTarg
-👀 I’m interested in ...
-🌱 I’m currently learning ...
-💞️ I’m looking to collaborate on ...
-📫 How to reach me ...
+# SQL-Code
+#### Analysis with SQL on World Population Prospects Data
+It is the twenty-seventh edition of official United Nations population estimates and projections. It presents population estimates from 1950 to the present for 237 countries or areas. The 2022 revision also presents population projections to the year 2100 that reflect a range of plausible outcomes at the global, regional and national levels. 
