@@ -2,9 +2,12 @@
 --- 2 Create table and upload data. 3 options
 ---  ===========================================================
 
--- 1st option - upload CSV file "WPP2022_Demographic_Indicators" throuth autoloader.
+-- 1st option - upload CSV file "WPP2022_Demographic_Indicators" throuth autoloader & add IDENTITY column.
 
--- 2nd option - Download CSV file "WPP2022_Demographic_Indicators" and Bulk insert to the table below. 
+--create primary key for the main table - automatically clustered index created and Execution Time reduced drastically
+alter table world add CasID int identity(1,1)
+
+-- 2nd option - Download CSV file "WPP2022_Demographic_Indicators" and Bulk insert to the table below & add IDENTITY column.. 
 USE World_population
 GO
 
@@ -14,7 +17,6 @@ GO
 SET NOCOUNT ON;
 
 create table World (
-CaseID INT IDENTITY(1,1), --- The column does not exist in the CSV file or the query.
 SortOrder int,
 LocID int,
 Notes nvarchar(55),
@@ -83,10 +85,11 @@ Q1560Female float,
 NetMigrations float,
 CNMR float
  ); 
+GO
 
  BULK INSERT World
 /*Dont forget to change the path */
-from 'C:\Users\WPP2022_Demographic_Indicators.csv'
+from 'C:\Users\U6067446\Downloads\WPP2022_Demographic_Indicators.csv'
 with(
  format = 'CSV',
 FIELDTERMINATOR = ',',
@@ -94,6 +97,9 @@ ROWTERMINATOR = '\n',
   FIRSTROW = 2
 )
 GO
+
+--create primary key for the main table - automatically clustered index created and Execution Time reduced drastically
+alter table world add CasID int identity(1,1)
 
 -- 3rd option - Run the query with demo data of 300 rows. 
 

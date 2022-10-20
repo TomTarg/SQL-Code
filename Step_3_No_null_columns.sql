@@ -43,4 +43,6 @@ GO
 
 exec nonull_check
 GO
+---  3.1 add PRIMARY KEY to Casid column
 
+Alter table World ADD constraint PK_Casid_World PRIMARY KEY (Casid); 
