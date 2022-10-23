@@ -1,8 +1,8 @@
-- 1 - Select filegroup, create recovery bulk, create Database   
+- 1 - Select filegroup, create recovery bulk, create Database 
 - 2 - Create table and upload data. 3 options (67 columns , 363K rows)
-- 3 - Add constraint not null for 68 (67+IDENTITY column) columns using the procedure, dynamic SQL, while loop and try & catch. 
+- 3 - Add constraint not null for 68 (67+IDENTITY column) columns using the procedure, dynamic SQL, while loop and try & catch
       3.1 Add PRIMARY KEY to Casid column
-- 4 - Build tables, add primary and foreign keys, create Diagram (also in PDF format)
+- 4 - Build tables, add primary and foreign keys, create Diagram
 
-- 5 - Create index, views, procedures, formulas 
-- 6 - Demonstrate the data with simple variables.
+- 5 - Create index, views, procedures, formulas, triggers
+- 6 - Demonstrate the data with simple variables
