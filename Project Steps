@@ -4,5 +4,5 @@
       3.1 Add PRIMARY KEY to Casid column
 - 4 - Build tables, add primary and foreign keys, create Diagram
 
-- 5 - Create index, views, procedures, functions, triggers
+- 5 - Create index, views, procedures, formulas, triggers
 - 6 - Demonstrate the data with simple variables
